@@ -41,7 +41,7 @@ body {
     -0.4px 0.2px 0 rgba(0, 0, 0, 0.08);
 }
 
-/* Base card surface; border is now rendered with roughjs SVG overlay. */
+/* Base card surface; border is rendered by the SVG overlay component. */
 .vox-card-shell {
   --vox-radius: clamp(22px, 3vw, 28px);
   isolation: isolate;
