@@ -1,7 +1,22 @@
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 
-const projects = [
+type Project = {
+  title: string;
+  href?: string;
+  desc: string;
+  meta: string;
+  topLeftTag: string;
+  topRightTag: string;
+  status: "live" | "progress";
+  imageSrc?: string;
+  imageAlt?: string;
+  detailsMode?: "hidden" | "modal";
+  detailsHeading?: string;
+  detailsItems?: readonly string[];
+};
+
+const projects: Project[] = [
   {
     title: "ZeekChat",
     href: "https://zeekchat.ai",
@@ -32,6 +47,7 @@ const projects = [
     topLeftTag: "Portfolio",
     topRightTag: "Live",
     status: "live",
+    detailsMode: "hidden",
   },
   {
     title: "Egg",
@@ -41,7 +57,23 @@ const projects = [
     topLeftTag: "OpenClaw",
     topRightTag: "Evolving daily",
     status: "progress",
+    detailsMode: "modal",
+    detailsHeading: "What Egg has done for Del",
+    detailsItems: [
+      "Set up practical workflows that speed up coding and debugging tasks.",
+      "Added guardrails so day-to-day output stays consistent and reliable.",
+      "Automates repetitive browser relay steps that used to eat up focus.",
+      "Handles boring execution loops so Del can focus on higher-leverage decisions.",
+    ],
   },
+];
+
+const thingsAboutMe = [
+  { label: "working out", emoji: "💪" },
+  { label: "being a loving husband", emoji: "🥰" },
+  { label: "gaming", emoji: "🎮" },
+  { label: "traveling", emoji: "✈️" },
+  { label: "pizza", emoji: "🍕" },
 ] as const;
 
 export default function Home() {
@@ -53,42 +85,43 @@ export default function Home() {
       </div>
 
       <main className="mx-auto w-full max-w-6xl px-5 pb-16 pt-14 sm:px-6 sm:pt-20">
-        <header className="max-w-2xl">
-          <p className="text-xs font-semibold tracking-wide text-black/60 [font-style:normal]">
-            addel.xyz
-          </p>
-          <h1 className="ink mt-4 font-[family-name:var(--font-display)] text-6xl leading-[0.9] [font-style:normal] sm:text-8xl">
+        <header className="w-full">
+          <h1 className="ink font-[family-name:var(--font-display)] text-6xl leading-[0.9] [font-style:normal] sm:text-8xl">
             Hi, I&apos;m Addel.
           </h1>
-          <p className="mt-4 text-[18px] leading-8 text-black/70 [font-style:normal]">
-            coder, AI tinkerer, tech enthusiast. I like building clean systems, sweating
-            the details, and making the computer do the boring bits.
-          </p>
+          <div className="mt-5 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-[18px] leading-8 text-black/70 [font-style:normal]">
+                vibe coder, AI tinkerer, tech enthusiast. I like building clean systems, sweating
+                the details, and making the computer do the boring bits.
+              </p>
 
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button href="mailto:ahamoudhy@gmail.com" variant="primary">
-              Email me
-            </Button>
-            <Button href="https://linkedin.com/addelh28" variant="secondary" external>
-              LinkedIn
-            </Button>
-          </div>
+              <div className="mt-8 flex flex-wrap gap-2">
+                {thingsAboutMe.map((item) => (
+                  <span
+                    key={item.label}
+                    className="group relative rounded-full border-2 border-[color:var(--box)] bg-white pl-3 pr-8 py-1 text-xs font-semibold text-black/70 [font-style:normal]"
+                  >
+                    {item.label}
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-3 top-1/2 inline-flex h-4 w-4 -translate-y-1/2 translate-y-1 scale-75 items-center justify-center text-sm opacity-0 transition-all duration-200 ease-out group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100"
+                    >
+                      {item.emoji}
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
 
-          <div className="mt-8 flex flex-wrap gap-2">
-            {[
-              "working out / staying healthy",
-              "being a loving husband",
-              "gaming",
-              "traveling",
-              "pizza",
-            ].map((item) => (
-              <span
-                key={item}
-                className="rounded-full border-2 border-[color:var(--box)] bg-white px-3 py-1 text-xs font-semibold text-black/70 [font-style:normal]"
-              >
-                {item}
-              </span>
-            ))}
+            <div className="flex flex-col gap-3 sm:flex-row lg:shrink-0 lg:justify-end">
+              <Button href="mailto:ahamoudhy@gmail.com" variant="primary">
+                Email me
+              </Button>
+              <Button href="https://linkedin.com/addelh28" variant="secondary" external>
+                LinkedIn
+              </Button>
+            </div>
           </div>
         </header>
 
@@ -97,9 +130,6 @@ export default function Home() {
             <h2 className="ink font-[family-name:var(--font-display)] text-3xl leading-none [font-style:normal]">
               Things I&apos;ve built
             </h2>
-            <p className="hidden text-[15px] font-semibold text-black/50 [font-style:normal] sm:block">
-              Small, useful, shipped.
-            </p>
           </div>
 
           <div className="mt-6 grid gap-6 sm:grid-cols-2">
@@ -109,11 +139,14 @@ export default function Home() {
                 title={p.title}
                 href={p.href}
                 meta={p.meta}
-                topLeftTag={(p as any).topLeftTag}
-                topRightTag={(p as any).topRightTag}
-                status={(p as any).status}
-                imageSrc={(p as any).imageSrc}
-                imageAlt={(p as any).imageAlt}
+                topLeftTag={p.topLeftTag}
+                topRightTag={p.topRightTag}
+                status={p.status}
+                imageSrc={p.imageSrc}
+                imageAlt={p.imageAlt}
+                detailsMode={p.detailsMode}
+                detailsHeading={p.detailsHeading}
+                detailsItems={p.detailsItems}
               >
                 {p.desc}
               </Card>
@@ -124,12 +157,7 @@ export default function Home() {
         <footer className="mt-16 border-t-2 border-dashed border-black/20 pt-8 text-[15px] text-black/60 [font-style:normal]">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p>© {new Date().getFullYear()} Addel Hamoudhy</p>
-            <a
-              className="underline decoration-black/20 underline-offset-4 hover:decoration-black/40"
-              href="mailto:ahamoudhy@gmail.com"
-            >
-              ahamoudhy@gmail.com
-            </a>
+            <p>Built by Egg 🥚</p>
           </div>
         </footer>
       </main>

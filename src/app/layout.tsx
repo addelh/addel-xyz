@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Patrick_Hand, Kalam } from "next/font/google";
 import "./globals.css";
+import { InkCursor } from "@/components/InkCursor";
 
 const hand = Patrick_Hand({
   variable: "--font-hand",
@@ -37,6 +38,7 @@ export default function RootLayout({
         className={`${hand.variable} ${display.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <InkCursor />
       </body>
     </html>
   );

@@ -9,20 +9,32 @@ type Size = {
   height: number;
 };
 
+type StrokeLinecap = "round" | "square" | "butt";
+
 type StrokePath = {
   key: string;
   d: string;
+  stroke: string;
   strokeWidth: number;
   opacity: number;
+  dasharray?: string;
+  dashoffset?: number;
+  linecap: StrokeLinecap;
+  jitterX: number;
+  jitterY: number;
 };
 
 type StrokePass = {
   seed: number;
+  stroke: string;
   strokeWidth: number;
   roughness: number;
   bowing: number;
   maxRandomnessOffset: number;
   opacity: number;
+  dasharray?: string;
+  linecap: StrokeLinecap;
+  jitter: number;
 };
 
 const generator = rough.generator();
@@ -30,51 +42,75 @@ const generator = rough.generator();
 const MAIN_STROKES: StrokePass[] = [
   {
     seed: 10241,
-    strokeWidth: 2.05,
-    roughness: 1.6,
-    bowing: 1.95,
-    maxRandomnessOffset: 2.4,
-    opacity: 0.9,
+    stroke: "#1f1f1f",
+    strokeWidth: 2.3,
+    roughness: 2.05,
+    bowing: 2.25,
+    maxRandomnessOffset: 2.9,
+    opacity: 0.94,
+    linecap: "round",
+    jitter: 0.22,
   },
   {
     seed: 10242,
-    strokeWidth: 1.45,
-    roughness: 2.1,
-    bowing: 2.55,
-    maxRandomnessOffset: 2.9,
-    opacity: 0.62,
+    stroke: "#222222",
+    strokeWidth: 1.72,
+    roughness: 2.45,
+    bowing: 2.95,
+    maxRandomnessOffset: 3.3,
+    opacity: 0.67,
+    dasharray: "18 7 2 8",
+    linecap: "butt",
+    jitter: 0.34,
   },
   {
     seed: 10243,
-    strokeWidth: 1.0,
-    roughness: 1.85,
-    bowing: 1.8,
-    maxRandomnessOffset: 2.2,
-    opacity: 0.46,
+    stroke: "#252525",
+    strokeWidth: 1.26,
+    roughness: 2.2,
+    bowing: 2.25,
+    maxRandomnessOffset: 2.85,
+    opacity: 0.5,
+    dasharray: "7 4 1.5 6",
+    linecap: "square",
+    jitter: 0.28,
   },
 ];
 
 const OFFSET_STROKES: StrokePass[] = [
   {
     seed: 20481,
-    strokeWidth: 1.75,
-    roughness: 1.75,
-    bowing: 2.25,
-    maxRandomnessOffset: 2.8,
-    opacity: 0.56,
+    stroke: "#262626",
+    strokeWidth: 1.95,
+    roughness: 2.25,
+    bowing: 2.7,
+    maxRandomnessOffset: 3.25,
+    opacity: 0.49,
+    dasharray: "20 10 3 11",
+    linecap: "butt",
+    jitter: 0.4,
   },
   {
     seed: 20482,
-    strokeWidth: 1.15,
-    roughness: 2.2,
-    bowing: 2.7,
-    maxRandomnessOffset: 3.0,
-    opacity: 0.39,
+    stroke: "#2b2b2b",
+    strokeWidth: 1.36,
+    roughness: 2.55,
+    bowing: 3.1,
+    maxRandomnessOffset: 3.5,
+    opacity: 0.34,
+    dasharray: "9 5 2 7",
+    linecap: "round",
+    jitter: 0.48,
   },
 ];
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
+}
+
+function stableNoise(seed: number, pathIndex: number, salt: number) {
+  const noise = Math.sin((seed + pathIndex * 13.37 + salt * 101.19) * 12.9898) * 43758.5453;
+  return noise - Math.floor(noise);
 }
 
 function roundedRectPath(x: number, y: number, width: number, height: number, radius: number) {
@@ -98,10 +134,19 @@ function roundedRectPath(x: number, y: number, width: number, height: number, ra
 
 function opacityVariance(baseOpacity: number, seed: number, pathIndex: number) {
   // Deterministic tiny variance so hydration stays stable.
-  const noise = Math.sin((seed + pathIndex * 13.37) * 12.9898) * 43758.5453;
-  const normalized = noise - Math.floor(noise);
-  const drift = (normalized - 0.5) * 0.16;
-  return clamp(baseOpacity + drift, 0.18, 1);
+  const normalized = stableNoise(seed, pathIndex, 1);
+  const drift = (normalized - 0.5) * 0.2;
+  return clamp(baseOpacity + drift, 0.16, 1);
+}
+
+function jitterVariance(jitter: number, seed: number, pathIndex: number, axisSalt: number) {
+  const normalized = stableNoise(seed, pathIndex, axisSalt);
+  return Number(((normalized - 0.5) * jitter).toFixed(3));
+}
+
+function dashOffsetVariance(seed: number, pathIndex: number) {
+  const normalized = stableNoise(seed, pathIndex, 5);
+  return Number(((normalized - 0.5) * 16).toFixed(3));
 }
 
 function opSetToPath(set: OpSet) {
@@ -150,8 +195,14 @@ function createStrokePaths({
       paths.push({
         key: `${keyPrefix}-${passIndex}-${setIndex}`,
         d,
+        stroke: pass.stroke,
         strokeWidth: pass.strokeWidth,
         opacity: opacityVariance(pass.opacity, pass.seed, setIndex),
+        dasharray: pass.dasharray,
+        dashoffset: pass.dasharray ? dashOffsetVariance(pass.seed, setIndex) : undefined,
+        linecap: pass.linecap,
+        jitterX: jitterVariance(pass.jitter, pass.seed, setIndex, 7),
+        jitterY: jitterVariance(pass.jitter, pass.seed, setIndex, 11),
       });
     });
   });
@@ -253,6 +304,7 @@ export function CardBorderOverlay() {
         className="h-full w-full overflow-visible"
         viewBox={`0 0 ${size.width} ${size.height}`}
         preserveAspectRatio="none"
+        overflow="visible"
       >
         <g>
           {offsetPaths.map((path) => (
@@ -260,12 +312,15 @@ export function CardBorderOverlay() {
               key={path.key}
               d={path.d}
               fill="none"
-              stroke="#2d2d2d"
+              stroke={path.stroke}
               strokeOpacity={path.opacity}
               strokeWidth={path.strokeWidth}
-              strokeLinecap="round"
+              strokeDasharray={path.dasharray}
+              strokeDashoffset={path.dashoffset}
+              strokeLinecap={path.linecap}
               strokeLinejoin="round"
               vectorEffect="non-scaling-stroke"
+              transform={`translate(${path.jitterX} ${path.jitterY})`}
             />
           ))}
         </g>
@@ -275,12 +330,15 @@ export function CardBorderOverlay() {
               key={path.key}
               d={path.d}
               fill="none"
-              stroke="#2d2d2d"
+              stroke={path.stroke}
               strokeOpacity={path.opacity}
               strokeWidth={path.strokeWidth}
-              strokeLinecap="round"
+              strokeDasharray={path.dasharray}
+              strokeDashoffset={path.dashoffset}
+              strokeLinecap={path.linecap}
               strokeLinejoin="round"
               vectorEffect="non-scaling-stroke"
+              transform={`translate(${path.jitterX} ${path.jitterY})`}
             />
           ))}
         </g>

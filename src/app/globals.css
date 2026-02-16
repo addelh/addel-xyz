@@ -28,6 +28,13 @@ body {
     "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
+@media (hover: hover) and (pointer: fine) {
+  body.ink-cursor-enabled,
+  body.ink-cursor-enabled * {
+    cursor: none !important;
+  }
+}
+
 /* subtle ink texture for headings (kept very light) */
 .ink {
   text-shadow: 0.6px 0.6px 0 rgba(0, 0, 0, 0.18),
