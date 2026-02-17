@@ -83,7 +83,13 @@ body {
   border-radius: 10px;
   box-shadow: 3px 3px 0 #222;
   line-height: 1;
-  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  transform-origin: center;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    border-width 160ms ease,
+    text-transform 160ms ease;
 }
 
 /* Pop burst (behind the button) */
@@ -113,8 +119,11 @@ body {
 @media (hover: hover) and (pointer: fine) {
   .comic-cta:hover {
     background: #f1f1f1;
-    transform: translate(-1px, -1px) scale(1.07);
-    box-shadow: 5px 5px 0 #222;
+    border-width: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transform: translate(-1px, -1px) scale(1.14);
+    box-shadow: 6px 6px 0 #222;
   }
 
   .comic-cta:hover::after {
