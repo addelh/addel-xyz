@@ -143,9 +143,7 @@ export default function Home() {
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  width="40"
-                  height="40"
-                  className="h-10 w-10"
+                  style={{ width: 40, height: 40 }}
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -175,9 +173,7 @@ export default function Home() {
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  width="40"
-                  height="40"
-                  className="h-10 w-10"
+                  style={{ width: 40, height: 40 }}
                   fill="currentColor"
                   xmlns="http://www.w3.org/2000/svg"
                 >
