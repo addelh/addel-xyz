@@ -45,6 +45,7 @@ export function Card({
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const modalTitleId = useId();
   const borderVariant = getComicBorderVariant(title);
+  const isEggCard = title === "Egg";
 
   const resolvedDetailsMode = detailsMode ?? (href ? "hidden" : "static");
   const canOpenDetailsModal = resolvedDetailsMode === "modal" && Boolean(detailsItems?.length);
@@ -143,7 +144,12 @@ export function Card({
           <div className="mt-6 border-t-2 border-dashed border-black/20 pt-5">
             <div className="flex min-h-[40px] items-center justify-end">
               {href ? (
-                <span className="comic-cta inline-flex items-center gap-1.5 [font-style:normal]">
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="comic-cta inline-flex items-center gap-1.5 text-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] [font-style:normal]"
+                >
                   Open
                   <svg
                     aria-hidden="true"
@@ -160,17 +166,23 @@ export function Card({
                       strokeLinejoin="round"
                     />
                   </svg>
-                </span>
+                </a>
               ) : canOpenDetailsModal ? (
                 <button
                   type="button"
                   onClick={() => setIsDetailsOpen(true)}
-                  className="comic-cta text-[15px] font-semibold text-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] [font-style:normal]"
+                  className={`comic-cta text-[15px] text-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] [font-style:normal] ${
+                    isEggCard ? "font-normal" : "font-semibold"
+                  }`}
                 >
                   Details
                 </button>
               ) : resolvedDetailsMode === "static" ? (
-                <span className="comic-cta text-[15px] font-semibold text-black/85 [font-style:normal]">
+                <span
+                  className={`comic-cta text-[15px] text-black/85 [font-style:normal] ${
+                    isEggCard ? "font-normal" : "font-semibold"
+                  }`}
+                >
                   Details
                 </span>
               ) : (
@@ -226,20 +238,9 @@ export function Card({
       </div>
     ) : null;
 
-  if (!href) {
-    return (
-      <>
-        {card}
-        {detailsModal}
-      </>
-    );
-  }
-
   return (
     <>
-      <a href={href} target="_blank" rel="noopener noreferrer" className="block">
-        {card}
-      </a>
+      {card}
       {detailsModal}
     </>
   );
