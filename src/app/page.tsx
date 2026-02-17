@@ -59,7 +59,7 @@ const projects: Project[] = [
     topRightTag: "Evolving daily",
     status: "progress",
     detailsMode: "modal",
-    detailsHeading: "Egg's highlights (not a basic bitch edition)",
+    detailsHeading: "things I do for del", 
     detailsItems: [
       "🛠️ Makes fancy website edits + ships them to prod without breaking your life.",
       "🧠 Turns vague ideas into crisp decisions, checklists, and next actions.",
