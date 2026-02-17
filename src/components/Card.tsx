@@ -2,7 +2,18 @@
 
 import Image from "next/image";
 import { type ReactNode, useEffect, useId, useState } from "react";
-import { CardBorderOverlay } from "@/components/CardBorderOverlay";
+
+function getComicBorderVariant(seed: string): "a" | "b" | "c" {
+  let hash = 0;
+  for (let i = 0; i < seed.length; i += 1) {
+    hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+  }
+
+  const variantIndex = hash % 3;
+  if (variantIndex === 0) return "a";
+  if (variantIndex === 1) return "b";
+  return "c";
+}
 
 export function Card({
   title,
@@ -33,6 +44,7 @@ export function Card({
 }) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const modalTitleId = useId();
+  const borderVariant = getComicBorderVariant(title);
 
   const resolvedDetailsMode = detailsMode ?? (href ? "hidden" : "static");
   const canOpenDetailsModal = resolvedDetailsMode === "modal" && Boolean(detailsItems?.length);
@@ -57,9 +69,10 @@ export function Card({
   }, [isDetailsOpen]);
 
   const card = (
-    <div className="vox-card-shell group relative p-[12px] transition hover:translate-y-[-3px] hover:rotate-[-0.35deg]">
-      <CardBorderOverlay />
-
+    <div
+      className="vox-card-shell group relative p-[12px] transition hover:translate-y-[-3px]"
+      data-border-variant={borderVariant}
+    >
       <div className="vox-card relative z-10">
         <div className="relative z-10 flex items-center justify-between gap-3 px-6 pt-6">
           {topLeftTag ? (
