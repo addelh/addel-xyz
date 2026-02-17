@@ -9,7 +9,18 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default function Image() {
+const SOUR_GUMMY_WOFF2 =
+  "https://fonts.gstatic.com/s/sourgummy/v3/8AtGGs2gPYuNDii97MjjBrLbYfdJvDU5AZfP5opPVCC4oC5ANR1NwcNk8FqNLW5MoLma.woff2";
+
+const PATRICK_HAND_WOFF2 =
+  "https://fonts.gstatic.com/s/patrickhand/v25/LDI1apSQOAYtSuYWp8ZhfYe8XsLLubg58w.woff2";
+
+export default async function Image() {
+  const [displayFont, handFont] = await Promise.all([
+    fetch(SOUR_GUMMY_WOFF2).then((res) => res.arrayBuffer()),
+    fetch(PATRICK_HAND_WOFF2).then((res) => res.arrayBuffer()),
+  ]);
+
   return new ImageResponse(
     (
       <div
@@ -26,8 +37,9 @@ export default function Image() {
         <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
           <div
             style={{
+              fontFamily: '"Sour Gummy"',
               fontSize: 120,
-              fontWeight: 800,
+              fontWeight: 500,
               letterSpacing: -2,
               color: "#111",
               lineHeight: 1,
@@ -37,10 +49,11 @@ export default function Image() {
           </div>
           <div
             style={{
-              fontSize: 40,
-              fontWeight: 500,
+              fontFamily: '"Patrick Hand"',
+              fontSize: 44,
+              fontWeight: 400,
               color: "rgba(17,17,17,0.72)",
-              lineHeight: 1.3,
+              lineHeight: 1.25,
               maxWidth: 860,
             }}
           >
@@ -51,6 +64,20 @@ export default function Image() {
     ),
     {
       ...size,
+      fonts: [
+        {
+          name: "Sour Gummy",
+          data: displayFont,
+          weight: 500,
+          style: "normal",
+        },
+        {
+          name: "Patrick Hand",
+          data: handFont,
+          weight: 400,
+          style: "normal",
+        },
+      ],
     }
   );
 }
