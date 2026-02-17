@@ -160,8 +160,12 @@ export function InkCursor() {
         return;
       }
 
-      const frameDelta = Math.min((time - lastFrameTime) / 16.67, 2);
+      const deltaSeconds = Math.min((time - lastFrameTime) / 1000, 1 / 30);
       lastFrameTime = time;
+
+      // Keep the exact "tuned at 60fps" feel, but make it time-delta based so
+      // higher refresh-rate displays (120/144Hz) don't slow the animation down.
+      const sixtyFpsFactor = deltaSeconds * 60;
 
       context.clearRect(0, 0, viewportWidth, viewportHeight);
       context.fillStyle = INK_COLOR;
@@ -169,10 +173,10 @@ export function InkCursor() {
       let liveCount = 0;
       for (let index = 0; index < particles.length; index += 1) {
         const particle = particles[index];
-        particle.x += particle.vx * frameDelta;
-        particle.y += particle.vy * frameDelta;
-        particle.radius += particle.growth * frameDelta;
-        particle.alpha -= particle.decay * frameDelta;
+        particle.x += particle.vx * sixtyFpsFactor;
+        particle.y += particle.vy * sixtyFpsFactor;
+        particle.radius += particle.growth * sixtyFpsFactor;
+        particle.alpha -= particle.decay * sixtyFpsFactor;
 
         if (particle.alpha <= 0) {
           continue;
