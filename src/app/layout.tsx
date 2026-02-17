@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Patrick_Hand, Gloria_Hallelujah } from "next/font/google";
+import { Geist_Mono, Patrick_Hand, Sour_Gummy } from "next/font/google";
 import "./globals.css";
 import { InkCursor } from "@/components/InkCursor";
 
@@ -9,11 +9,11 @@ const hand = Patrick_Hand({
   weight: ["400"],
 });
 
-// Vox uses Gloria Hallelujah for headings
-const display = Gloria_Hallelujah({
+// Vox uses Sour Gummy for headings
+const display = Sour_Gummy({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: "400",
+  weight: "500",
 });
 
 const geistMono = Geist_Mono({
