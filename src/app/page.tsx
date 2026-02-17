@@ -100,12 +100,12 @@ export default function Home() {
                 {thingsAboutMe.map((item) => (
                   <span
                     key={item.label}
-                    className="group relative rounded-full border-2 border-[color:var(--box)] bg-white pl-3 pr-8 py-1 text-xs font-semibold text-black/70 [font-style:normal]"
+                    className="group relative cursor-default rounded-full border-2 border-[color:var(--box)] bg-white px-3 py-1 text-xs font-semibold text-black/70 [font-style:normal] transition-transform duration-300 hover:z-10 hover:-translate-y-0.5"
                   >
                     {item.label}
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute right-3 top-1/2 inline-flex h-4 w-4 -translate-y-1/2 translate-y-1 scale-75 items-center justify-center text-sm opacity-0 transition-all duration-200 ease-out group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100"
+                      className="pointer-events-none absolute right-0 top-1/2 z-10 -translate-y-1/2 text-2xl text-black opacity-0 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-translate-y-7 group-hover:translate-x-2 group-hover:rotate-12 group-hover:opacity-100"
                     >
                       {item.emoji}
                     </span>
