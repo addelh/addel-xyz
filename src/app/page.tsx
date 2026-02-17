@@ -138,25 +138,25 @@ export default function Home() {
                 href="mailto:ahamoudhy@gmail.com"
                 variant="secondary"
                 ariaLabel="Email me"
-                className="h-12 w-12 rounded-full p-0"
+                className="h-12 w-12 rounded-full p-0 shadow-[4px_4px_0_#111] hover:shadow-[6px_6px_0_#111]"
               >
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-5 w-5"
+                  className="h-6 w-6"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M4 7.5V17c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V7.5"
+                    d="M5 8.25c0-.69.56-1.25 1.25-1.25h11.5c.69 0 1.25.56 1.25 1.25V16.75c0 .69-.56 1.25-1.25 1.25H6.25C5.56 18 5 17.44 5 16.75V8.25Z"
                     stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
+                    strokeWidth="2.2"
+                    strokeLinejoin="round"
                   />
                   <path
-                    d="M5 8l7 5 7-5"
+                    d="M6.2 8.2L12 12.2L17.8 8.2"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="2.2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -168,12 +168,12 @@ export default function Home() {
                 variant="secondary"
                 external
                 ariaLabel="LinkedIn"
-                className="h-12 w-12 rounded-full p-0"
+                className="h-12 w-12 rounded-full p-0 shadow-[4px_4px_0_#111] hover:shadow-[6px_6px_0_#111]"
               >
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-5 w-5"
+                  className="h-6 w-6"
                   fill="currentColor"
                   xmlns="http://www.w3.org/2000/svg"
                 >
