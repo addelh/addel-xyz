@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Patrick_Hand, Chewy } from "next/font/google";
+import { Geist_Mono, Patrick_Hand, Comic_Relief } from "next/font/google";
 import "./globals.css";
 import { InkCursor } from "@/components/InkCursor";
 
@@ -9,8 +9,8 @@ const hand = Patrick_Hand({
   weight: ["400"],
 });
 
-// Vox uses Chewy for headings
-const display = Chewy({
+// Vox uses Comic Relief for headings
+const display = Comic_Relief({
   variable: "--font-display",
   subsets: ["latin"],
   weight: "400",
