@@ -167,7 +167,7 @@ export default function Home() {
               </Button>
 
               <Button
-                href="https://linkedin.com/addelh28"
+                href="https://www.linkedin.com/in/addelh28/"
                 variant="secondary"
                 external
                 ariaLabel="LinkedIn"
