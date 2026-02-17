@@ -9,6 +9,7 @@ type ButtonProps = {
   variant?: Variant;
   external?: boolean;
   className?: string;
+  ariaLabel?: string;
 };
 
 export function Button({
@@ -17,6 +18,7 @@ export function Button({
   variant = "primary",
   external,
   className = "",
+  ariaLabel,
 }: ButtonProps) {
   const base =
     "inline-flex items-center justify-center gap-2 rounded-xl border-2 px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]";
@@ -30,7 +32,13 @@ export function Button({
 
   if (external) {
     return (
-      <a className={cls} href={href} target="_blank" rel="noopener noreferrer">
+      <a
+        className={cls}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={ariaLabel}
+      >
         {children}
       </a>
     );
@@ -38,14 +46,14 @@ export function Button({
 
   if (href.startsWith("mailto:")) {
     return (
-      <a className={cls} href={href}>
+      <a className={cls} href={href} aria-label={ariaLabel}>
         {children}
       </a>
     );
   }
 
   return (
-    <Link className={cls} href={href}>
+    <Link className={cls} href={href} aria-label={ariaLabel}>
       {children}
     </Link>
   );

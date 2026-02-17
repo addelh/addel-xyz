@@ -134,11 +134,51 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row lg:shrink-0 lg:justify-end">
-              <Button href="mailto:ahamoudhy@gmail.com" variant="primary">
-                Email me
+              <Button
+                href="mailto:ahamoudhy@gmail.com"
+                variant="secondary"
+                ariaLabel="Email me"
+                className="h-12 w-12 rounded-full p-0"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4 7.5V17c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V7.5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M5 8l7 5 7-5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </Button>
-              <Button href="https://linkedin.com/addelh28" variant="secondary" external>
-                LinkedIn
+
+              <Button
+                href="https://linkedin.com/addelh28"
+                variant="secondary"
+                external
+                ariaLabel="LinkedIn"
+                className="h-12 w-12 rounded-full p-0"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M6.94 7.5a1.44 1.44 0 1 1 0-2.88 1.44 1.44 0 0 1 0 2.88ZM5.5 20h2.9V9.1H5.5V20Zm5.1-10.9V20h2.9v-5.6c0-1.48.28-2.92 2.11-2.92 1.8 0 1.82 1.68 1.82 3.02V20h2.9v-6.1c0-2.99-.65-5.29-4.15-5.29-1.68 0-2.8.92-3.26 1.79h-.04V9.1h-2.78Z" />
+                </svg>
               </Button>
             </div>
           </div>
