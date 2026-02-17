@@ -21,8 +21,14 @@ type Point = {
   y: number;
 };
 
+type TrailPoint = Point & {
+  t: number;
+};
+
 const MAX_PARTICLES = 260;
-const TRAIL_SPACING_PX = 6;
+const TRAIL_SAMPLE_PX = 4;
+const MAX_TRAIL_AGE_MS = 220;
+const MAX_TRAIL_POINTS = 90;
 const INK_COLOR = "rgba(18, 18, 18, 1)";
 
 const randomBetween = (min: number, max: number) => Math.random() * (max - min) + min;
@@ -52,6 +58,19 @@ export function InkCursor() {
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const particles: InkParticle[] = [];
+    const trail: TrailPoint[] = [];
+
+    const trimTrail = (now: number) => {
+      const oldestAllowed = now - MAX_TRAIL_AGE_MS;
+      while (trail.length > 0 && (trail[0].t < oldestAllowed || trail.length > MAX_TRAIL_POINTS)) {
+        trail.shift();
+      }
+    };
+
+    const addTrailPoint = (x: number, y: number, now: number) => {
+      trail.push({ x, y, t: now });
+      trimTrail(now);
+    };
 
     let context: CanvasRenderingContext2D | null = null;
     let rafId = 0;
@@ -168,6 +187,37 @@ export function InkCursor() {
       const sixtyFpsFactor = deltaSeconds * 60;
 
       context.clearRect(0, 0, viewportWidth, viewportHeight);
+
+      // Ink streak trail (time-based fade + taper).
+      trimTrail(time);
+      if (trail.length > 1) {
+        context.save();
+        context.lineCap = "round";
+        context.lineJoin = "round";
+
+        for (let index = 1; index < trail.length; index += 1) {
+          const prev = trail[index - 1];
+          const curr = trail[index];
+          const age = (time - curr.t) / MAX_TRAIL_AGE_MS;
+          const strength = Math.max(0, 1 - age);
+          if (strength <= 0) {
+            continue;
+          }
+
+          const alpha = 0.35 * strength * strength;
+          const width = 14 * Math.pow(strength, 0.9) + 1.5;
+
+          context.strokeStyle = `rgba(18, 18, 18, ${alpha})`;
+          context.lineWidth = width;
+          context.beginPath();
+          context.moveTo(prev.x, prev.y);
+          context.lineTo(curr.x, curr.y);
+          context.stroke();
+        }
+
+        context.restore();
+      }
+
       context.fillStyle = INK_COLOR;
 
       let liveCount = 0;
@@ -210,10 +260,11 @@ export function InkCursor() {
         return;
       }
 
+      const now = performance.now();
       const pointer = { x: event.clientX, y: event.clientY };
       if (!lastPointer) {
         lastPointer = pointer;
-        spawnTrailBlob(pointer.x, pointer.y);
+        addTrailPoint(pointer.x, pointer.y, now);
         return;
       }
 
@@ -224,10 +275,11 @@ export function InkCursor() {
         return;
       }
 
-      const stepCount = Math.max(1, Math.min(8, Math.floor(distance / TRAIL_SPACING_PX)));
+      // Sample along the movement so the stroke feels continuous.
+      const stepCount = Math.max(1, Math.min(16, Math.floor(distance / TRAIL_SAMPLE_PX)));
       for (let step = 1; step <= stepCount; step += 1) {
         const progress = step / stepCount;
-        spawnTrailBlob(lastPointer.x + deltaX * progress, lastPointer.y + deltaY * progress);
+        addTrailPoint(lastPointer.x + deltaX * progress, lastPointer.y + deltaY * progress, now);
       }
 
       lastPointer = pointer;
@@ -251,6 +303,7 @@ export function InkCursor() {
       }
 
       particles.length = 0;
+      trail.length = 0;
       lastPointer = null;
 
       if (context) {
