@@ -1,5 +1,6 @@
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
+import { InterestPills } from "@/components/InterestPills";
 
 type Project = {
   title: string;
@@ -98,44 +99,10 @@ export default function Home() {
                 the details, and making the computer do the boring bits.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-2">
-                {thingsAboutMe.map((item, index) => {
-                  const palette = [
-                    { bg: "#d7f7ff", pop: "#00d4ff" },
-                    { bg: "#fff0d6", pop: "#ff8a00" },
-                    { bg: "#e6dcff", pop: "#8b5cf6" },
-                    { bg: "#dcffe6", pop: "#22c55e" },
-                    { bg: "#ffe0ef", pop: "#fb7185" },
-                    { bg: "#fff7a8", pop: "#f59e0b" },
-                  ];
-
-                  const colors = palette[index % palette.length];
-
-                  return (
-                    <span
-                      key={item.label}
-                      className="interest-pill group cursor-default [font-style:normal]"
-                      style={
-                        {
-                          "--pill-bg": colors.bg,
-                          "--pill-pop": colors.pop,
-                        } as React.CSSProperties
-                      }
-                    >
-                    {item.label}
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute right-0 top-1/2 z-10 -translate-y-1/2 text-2xl text-black opacity-0 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-translate-y-7 group-hover:translate-x-2 group-hover:rotate-12 group-hover:opacity-100"
-                    >
-                      {item.emoji}
-                    </span>
-                  </span>
-                  );
-                })}
-              </div>
+              <InterestPills items={thingsAboutMe} />
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row lg:shrink-0 lg:justify-end">
+            <div className="hidden flex-col gap-3 sm:flex sm:flex-row lg:shrink-0 lg:justify-end">
               <Button
                 href="mailto:ahamoudhy@gmail.com"
                 variant="secondary"
@@ -218,6 +185,57 @@ export default function Home() {
         </section>
 
         <footer className="mt-16 border-t-2 border-dashed border-black/20 pt-8 text-[15px] text-black/60 [font-style:normal]">
+          <div className="mb-6 flex justify-end gap-3 sm:hidden">
+            <Button
+              href="mailto:ahamoudhy@gmail.com"
+              variant="secondary"
+              ariaLabel="Email me"
+              className="h-12 w-12 rounded-full !p-0 !gap-0 shadow-[4px_4px_0_#111] transition hover:scale-110 hover:shadow-[6px_6px_0_#111] hover:bg-white hover:border-[#EA4335] hover:text-[#EA4335]"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="block shrink-0"
+                style={{ width: 32, height: 32 }}
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 8.25c0-.69.56-1.25 1.25-1.25h11.5c.69 0 1.25.56 1.25 1.25V16.75c0 .69-.56 1.25-1.25 1.25H6.25C5.56 18 5 17.44 5 16.75V8.25Z"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M6.2 8.2L12 12.2L17.8 8.2"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Button>
+
+            <Button
+              href="https://www.linkedin.com/in/addelh28/"
+              variant="secondary"
+              external
+              ariaLabel="LinkedIn"
+              className="h-12 w-12 rounded-full !p-0 !gap-0 shadow-[4px_4px_0_#111] text-[#0A66C2] transition hover:scale-110 hover:shadow-[6px_6px_0_#111] hover:bg-[#DBEAFE] hover:border-[#0A66C2] hover:text-[#0A66C2]"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="block shrink-0"
+                style={{ width: 32, height: 32 }}
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M6.94 7.5a1.44 1.44 0 1 1 0-2.88 1.44 1.44 0 0 1 0 2.88ZM5.5 20h2.9V9.1H5.5V20Zm5.1-10.9V20h2.9v-5.6c0-1.48.28-2.92 2.11-2.92 1.8 0 1.82 1.68 1.82 3.02V20h2.9v-6.1c0-2.99-.65-5.29-4.15-5.29-1.68 0-2.8.92-3.26 1.79h-.04V9.1h-2.78Z" />
+              </svg>
+            </Button>
+          </div>
+
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p>© {new Date().getFullYear()} Addel Hamoudhy</p>
             <p>Built by Egg 🥚</p>
