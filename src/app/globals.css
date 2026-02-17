@@ -41,37 +41,87 @@ body {
     -0.4px 0.2px 0 rgba(0, 0, 0, 0.08);
 }
 
-/* Comic-style card shell and border treatment (pure CSS). */
+/* Comic-style card shell and border treatment (pure CSS).
+   Matches https://codepen.io/mp/pen/kBEeKw: rotate the border, counter-rotate inner content. */
 .vox-card-shell {
   isolation: isolate;
   overflow: visible;
+  transition: transform 180ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vox-card-shell:hover {
+    transform: translateY(-3px);
+  }
 }
 
 .vox-card {
   position: relative;
   z-index: 10;
   overflow: visible;
-  border-style: solid;
-  border-color: #111;
-  border-width: 4px 5px 6px 3px;
-  border-radius: 28px 18px 30px 16px / 22px 31px 20px 28px;
+  border: solid black;
+  border-color: black;
   background: var(--paper);
-  box-shadow: 10px 10px 0 #111;
+  /* keep a little comic depth; can be dialed later */
+  box-shadow: 7px 7px 0 #111;
 }
 
+.vox-card-inner {
+  height: 100%;
+}
+
+/* CTA style inspired by CodePen .evenboxinner */
+.comic-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.95rem;
+  background: #ddd;
+  border: 2px solid #222;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 #222;
+  line-height: 1;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .comic-cta:hover {
+    background: #e7e7e7;
+  }
+  .vox-card-shell:hover .comic-cta {
+    transform: translateY(-1px);
+  }
+}
+
+/* Variant 1 (CodePen .box1) */
 .vox-card-shell[data-border-variant="a"] .vox-card {
-  border-width: 4px 6px 5px 3px;
-  border-radius: 30px 16px 32px 14px / 20px 33px 18px 30px;
+  border-width: 3px 4px 3px 5px;
+  border-radius: 95% 4% 92% 5% / 4% 95% 6% 95%;
+  transform: rotate(2deg);
+}
+.vox-card-shell[data-border-variant="a"] .vox-card-inner {
+  transform: rotate(-2deg);
 }
 
+/* Variant 2 (CodePen .box2) */
 .vox-card-shell[data-border-variant="b"] .vox-card {
-  border-width: 5px 3px 6px 5px;
-  border-radius: 22px 34px 20px 30px / 32px 18px 30px 16px;
+  border-width: 3px 3px 5px 5px;
+  border-radius: 4% 95% 6% 95% / 95% 4% 92% 5%;
+  transform: rotate(-2deg);
+}
+.vox-card-shell[data-border-variant="b"] .vox-card-inner {
+  transform: rotate(2deg);
 }
 
+/* Variant 3 (CodePen .box3) */
 .vox-card-shell[data-border-variant="c"] .vox-card {
-  border-width: 6px 4px 3px 5px;
-  border-radius: 34px 24px 30px 18px / 18px 30px 20px 34px;
+  border-width: 5px 3px 3px 5px;
+  border-radius: 95% 4% 97% 5% / 4% 94% 3% 95%;
+  transform: rotate(2deg);
+}
+.vox-card-shell[data-border-variant="c"] .vox-card-inner {
+  transform: rotate(-2deg);
 }
 
 ::selection {

@@ -70,11 +70,12 @@ export function Card({
 
   const card = (
     <div
-      className="vox-card-shell group relative p-[12px] transition hover:translate-y-[-3px]"
+      className="vox-card-shell group relative p-[12px]"
       data-border-variant={borderVariant}
     >
       <div className="vox-card relative z-10">
-        <div className="relative z-10 flex items-center justify-between gap-3 px-6 pt-6">
+        <div className="vox-card-inner">
+          <div className="relative z-10 flex items-center justify-between gap-3 px-6 pt-6">
           {topLeftTag ? (
             <span className="rounded-lg border-2 border-[color:var(--box)] bg-white px-2.5 py-1 text-xs font-semibold [font-style:normal]">
               {topLeftTag}
@@ -142,7 +143,7 @@ export function Card({
           <div className="mt-6 border-t-2 border-dashed border-black/20 pt-5">
             <div className="flex min-h-[40px] items-center justify-end">
               {href ? (
-                <span className="inline-flex items-center gap-1.5 rounded-xl border-2 border-[color:var(--box)] bg-white px-4 py-2 text-[15px] font-semibold [font-style:normal]">
+                <span className="comic-cta inline-flex items-center gap-1.5 [font-style:normal]">
                   Open
                   <svg
                     aria-hidden="true"
@@ -164,12 +165,12 @@ export function Card({
                 <button
                   type="button"
                   onClick={() => setIsDetailsOpen(true)}
-                  className="rounded-full border-[3px] border-[color:var(--box)] bg-orange-50/70 px-4 py-2 text-[15px] font-semibold text-black/85 transition-colors duration-200 hover:bg-orange-300/80 group-hover:bg-orange-300/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] [font-style:normal]"
+                  className="comic-cta text-[15px] font-semibold text-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)] [font-style:normal]"
                 >
                   Details
                 </button>
               ) : resolvedDetailsMode === "static" ? (
-                <span className="rounded-full border-[3px] border-[color:var(--box)] bg-orange-50/70 px-4 py-2 text-[15px] font-semibold text-black/85 transition-colors duration-200 hover:bg-orange-300/80 group-hover:bg-orange-300/80 [font-style:normal]">
+                <span className="comic-cta text-[15px] font-semibold text-black/85 [font-style:normal]">
                   Details
                 </span>
               ) : (
@@ -177,6 +178,7 @@ export function Card({
               )}
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
