@@ -138,12 +138,12 @@ export default function Home() {
                 href="mailto:ahamoudhy@gmail.com"
                 variant="secondary"
                 ariaLabel="Email me"
-                className="h-20 w-20 rounded-full p-0 shadow-[4px_4px_0_#111] transition hover:scale-110 hover:shadow-[6px_6px_0_#111] hover:bg-[#E03A2F] hover:text-white"
+                className="h-12 w-12 rounded-full p-0 shadow-[4px_4px_0_#111] transition hover:scale-110 hover:shadow-[6px_6px_0_#111] hover:bg-[#E03A2F] hover:text-white"
               >
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-16 w-16"
+                  className="h-10 w-10"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -168,12 +168,12 @@ export default function Home() {
                 variant="secondary"
                 external
                 ariaLabel="LinkedIn"
-                className="h-20 w-20 rounded-full p-0 shadow-[4px_4px_0_#111] transition hover:scale-110 hover:shadow-[6px_6px_0_#111] hover:bg-[#0A66C2] hover:text-white"
+                className="h-12 w-12 rounded-full p-0 shadow-[4px_4px_0_#111] transition hover:scale-110 hover:shadow-[6px_6px_0_#111] hover:bg-[#0A66C2] hover:text-white"
               >
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-16 w-16"
+                  className="h-10 w-10"
                   fill="currentColor"
                   xmlns="http://www.w3.org/2000/svg"
                 >
