@@ -23,8 +23,23 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Addel — Portfolio",
-  description: "Addel Hamoudhy — coder, AI tinkerer, tech enthusiast.",
+  description: "Addel Hamoudhy — vibe coder, AI tinkerer, tech enthusiast.",
   metadataBase: new URL("https://addel.xyz"),
+  openGraph: {
+    title: "Addel — Portfolio",
+    description: "Hi, I'm Addel.",
+    url: "https://addel.xyz",
+    siteName: "Addel",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Addel — Portfolio",
+    description: "Hi, I'm Addel.",
+  },
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
