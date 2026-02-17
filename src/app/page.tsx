@@ -169,7 +169,7 @@ export default function Home() {
                 variant="secondary"
                 external
                 ariaLabel="LinkedIn"
-                className="h-12 w-12 rounded-full !p-0 !gap-0 shadow-[4px_4px_0_#111] transition hover:scale-110 hover:shadow-[6px_6px_0_#111] hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white"
+                className="h-12 w-12 rounded-full !p-0 !gap-0 shadow-[4px_4px_0_#111] text-[#0A66C2] transition hover:scale-110 hover:shadow-[6px_6px_0_#111] hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white"
               >
                 <svg
                   aria-hidden="true"
