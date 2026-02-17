@@ -97,11 +97,29 @@ export default function Home() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-2">
-                {thingsAboutMe.map((item) => (
-                  <span
-                    key={item.label}
-                    className="group relative cursor-default rounded-full border-2 border-[color:var(--box)] bg-white px-3 py-1 text-xs font-semibold text-black/70 [font-style:normal] transition-transform duration-300 hover:z-10 hover:-translate-y-0.5"
-                  >
+                {thingsAboutMe.map((item, index) => {
+                  const palette = [
+                    { bg: "#d7f7ff", pop: "#00d4ff" },
+                    { bg: "#fff0d6", pop: "#ff8a00" },
+                    { bg: "#e6dcff", pop: "#8b5cf6" },
+                    { bg: "#dcffe6", pop: "#22c55e" },
+                    { bg: "#ffe0ef", pop: "#fb7185" },
+                    { bg: "#fff7a8", pop: "#f59e0b" },
+                  ];
+
+                  const colors = palette[index % palette.length];
+
+                  return (
+                    <span
+                      key={item.label}
+                      className="interest-pill group cursor-default [font-style:normal]"
+                      style={
+                        {
+                          "--pill-bg": colors.bg,
+                          "--pill-pop": colors.pop,
+                        } as React.CSSProperties
+                      }
+                    >
                     {item.label}
                     <span
                       aria-hidden="true"
@@ -110,7 +128,8 @@ export default function Home() {
                       {item.emoji}
                     </span>
                   </span>
-                ))}
+                  );
+                })}
               </div>
             </div>
 

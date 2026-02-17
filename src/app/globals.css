@@ -70,55 +70,105 @@ body {
   height: 100%;
 }
 
-/* CTA style (loud comic label/button vibe) */
+/* CTA style (keeps the simple label look; surprise pop on hover) */
 .comic-cta {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
-  padding: 0.55rem 1rem;
-  background:
-    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.18) 0.7px, transparent 0.75px)
-      0 0 / 6px 6px,
-    #f1f1f1;
-  border: 3px solid #111;
-  border-radius: 12px;
-  box-shadow: 4px 4px 0 #111;
+  padding: 0.5rem 0.95rem;
+  background: #ddd;
+  border: 2px solid #222;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 #222;
   line-height: 1;
-  transform: rotate(-0.6deg);
-  transition:
-    background-color 150ms ease,
-    transform 150ms ease,
-    box-shadow 150ms ease;
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
-.comic-cta::before {
+/* Pop burst (behind the button) */
+.comic-cta::after {
   content: "";
   position: absolute;
-  inset: 3px;
-  border: 2px dashed rgba(0, 0, 0, 0.28);
-  border-radius: 9px;
-  pointer-events: none;
+  inset: -18px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 12px 12px, rgba(0, 0, 0, 0.12) 1.2px, transparent 1.3px)
+      0 0 / 10px 10px,
+    #ff8a00;
+  clip-path: polygon(
+    50% 0%, 60% 10%, 75% 5%, 78% 20%, 95% 25%, 85% 38%,
+    100% 50%, 85% 62%, 95% 75%, 78% 80%, 75% 95%, 60% 90%,
+    50% 100%, 40% 90%, 25% 95%, 22% 80%, 5% 75%, 15% 62%,
+    0% 50%, 15% 38%, 5% 25%, 22% 20%, 25% 5%, 40% 10%
+  );
+  opacity: 0;
+  transform: scale(0.65) rotate(-10deg);
+  transition: opacity 160ms ease, transform 200ms ease;
+  z-index: -1;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .comic-cta:hover {
-    background:
-      radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.14) 0.7px, transparent 0.75px)
-        0 0 / 6px 6px,
-      #ff8a00;
-    transform: translate(-1px, -1px) rotate(-1.2deg);
-    box-shadow: 6px 6px 0 #111;
+    background: #f1f1f1;
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 #222;
+  }
+
+  .comic-cta:hover::after {
+    opacity: 1;
+    transform: scale(1) rotate(6deg);
   }
 
   .comic-cta:active {
-    transform: translate(1px, 1px) rotate(-0.6deg);
-    box-shadow: 2px 2px 0 #111;
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 #222;
+  }
+}
+
+/* Interest pills (random colour via CSS vars; same surprise pop) */
+.interest-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  border: 2px solid #111;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.72);
+  background: var(--pill-bg, #fff);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.interest-pill::after {
+  content: "";
+  position: absolute;
+  inset: -16px;
+  background: var(--pill-pop, #ff8a00);
+  clip-path: polygon(
+    50% 0%, 60% 10%, 75% 5%, 78% 20%, 95% 25%, 85% 38%,
+    100% 50%, 85% 62%, 95% 75%, 78% 80%, 75% 95%, 60% 90%,
+    50% 100%, 40% 90%, 25% 95%, 22% 80%, 5% 75%, 15% 62%,
+    0% 50%, 15% 38%, 5% 25%, 22% 20%, 25% 5%, 40% 10%
+  );
+  opacity: 0;
+  transform: scale(0.6) rotate(-10deg);
+  transition: opacity 160ms ease, transform 200ms ease;
+  z-index: -1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interest-pill:hover {
+    transform: translate(-1px, -2px) rotate(-0.6deg);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
   }
 
-  .vox-card-shell:hover .comic-cta {
-    transform: translate(-0.5px, -0.5px) rotate(-1deg);
+  .interest-pill:hover::after {
+    opacity: 1;
+    transform: scale(1) rotate(8deg);
   }
 }
 
