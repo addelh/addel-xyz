@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Patrick_Hand, Kalam } from "next/font/google";
+import { Geist_Mono, Patrick_Hand, Chewy } from "next/font/google";
 import "./globals.css";
 import { InkCursor } from "@/components/InkCursor";
 
@@ -9,11 +9,11 @@ const hand = Patrick_Hand({
   weight: ["400"],
 });
 
-// Vox uses Kalam for headings
-const display = Kalam({
+// Vox uses Chewy for headings
+const display = Chewy({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: "400",
 });
 
 const geistMono = Geist_Mono({
