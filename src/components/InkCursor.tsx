@@ -205,7 +205,7 @@ export function InkCursor() {
           }
 
           const alpha = 0.35 * strength * strength;
-          const width = 14 * Math.pow(strength, 0.9) + 1.5;
+          const width = 11 * Math.pow(strength, 0.9) + 1.2;
 
           context.strokeStyle = `rgba(18, 18, 18, ${alpha})`;
           context.lineWidth = width;
